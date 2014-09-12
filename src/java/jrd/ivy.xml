@@ -17,5 +17,9 @@
 		<artifact name="foo" type="jar" conf="build" />
 	</publications>
 	-->
+    <dependencies>
+        <dependency org="redis.clients" name="jedis" rev="2.5.2"
+          conf="build->default,sources"/>
+    </dependencies>
 
 </ivy-module>
