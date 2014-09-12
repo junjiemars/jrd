@@ -1,0 +1,15 @@
+<project name="native"  default="publish"
+	xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<property name="ivy.dir" value="${basedir}/" />
+
+	<import file="${ivy.dir}/ivy-install.xml" />
+
+	<target name="publish" 
+		description="publish native libs to ivy local repository">
+		<subant target="publish">
+			<fileset dir="${ivy.native.dir}" includes="**/build.xml" />
+		</subant>
+	</target>
+ 
+</project>

@@ -1,0 +1,21 @@
+<ivy-module version="1.0">
+    <info 
+        organisation="org.mars"
+        module="lang"
+        status="integration">
+		<ivyauthor name="junjiemars@gmail.com" />
+	</info>
+	<configurations>
+		<conf name="build" 
+			description="study java programming" />
+		<conf name="test" visibility="private"
+			description="for testing foo" />
+	</configurations>
+
+	<!--
+	<publications>
+		<artifact name="foo" type="jar" conf="build" />
+	</publications>
+	-->
+
+</ivy-module>

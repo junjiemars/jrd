@@ -1,0 +1,31 @@
+<project name="ojdbc" default="publish" 
+		 xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<property name="root.dir" value="${basedir}/../../.." />
+	<property name="ivy.dir" value="${root.dir}/ivy" />
+
+	<import file="${ivy.dir}/ivy-install.xml" />
+
+	<target name="publish" depends="install-ivy"
+		description="publish native jars to the local ivy repository">
+		<ivy:resolve />
+        <ivy:publish artifactspattern="${basedir}/[artifact]-[revision].[ext]" 
+            resolver="local"
+            status="release"
+			overwrite="true"
+			forcedeliver="true" />
+    </target>
+
+	<!--
+	<target name="publish" depends="install-ivy">
+		<echo message="TESTING publish-native-lib" />
+	</target>
+	-->
+	
+	<!--
+
+			overwrite="true"
+        	pubrevision="${revision}"
+	-->
+   
+</project>

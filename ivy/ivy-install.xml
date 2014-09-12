@@ -1,0 +1,278 @@
+<!DOCTYPE project>
+<project name="ivy-install" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<property file="${ivy.dir}/ivy-install.properties" />
+    <property name="ivy.local.default.root" value="${dist.dir}/local"/>
+    <property name="ivy.shared.default.root" value="${dist.dir}/dist/shared"/>
+
+	<target name="debug">
+		<echo message="${root.dir}" />
+		<echo message="${ivy.version}" />
+		<echo message="${ivy.repo.url}" />
+	</target>
+
+	<condition property="ivy.jar.exists">
+		<available file="${ivy.jar.file}"/>
+	</condition>
+
+	<target name="download-ivy" unless="ivy.jar.exists">
+        <echo message="dowloading ${ivy.version}..."/>
+        <get src="${ivy.repo.url}"
+			 dest="${ivy.jar.file}" 
+			 usetimestamp="true"/>
+    </target>
+
+    <target name="install-ivy" depends="download-ivy" unless="ivy.initialized"
+        description="install ivy">
+        <path id="ivy.lib.path">
+            <pathelement location="${ivy.jar.file}"/>
+        </path>
+        <taskdef resource="${ivy.antlib.xml}" 
+				 uri="${ivy.antlib.uri}" 
+				 classpathref="ivy.lib.path"/>
+		<property name="ivy.initialized" value="true"/>
+    </target>
+
+	<target name="resolve-ivy" depends="install-ivy" 
+		description="resolve and retrieve dependencies with ivy">
+        <mkdir dir="${lib.dir}"/> 
+        <ivy:resolve file="${ivy.file}"/>
+        <ivy:retrieve pattern="${lib.dir}/[artifact](-[classifier]).[ext]" />
+    </target>
+
+    <target name="report-ivy" depends="resolve-ivy" 
+		description="generates a report of dependencies">
+        <ivy:report todir="${build.dir}"/>
+    </target>
+
+	<target name="publish-jar" depends="clean-build,clean-lib,jar" 
+		description="publish jars in the ivy repository">
+        <ivy:publish artifactspattern="${build.dir}/[artifact].[ext]" 
+        	resolver="${publish.resolver}"
+            pubrevision="${version}" 
+            status="${publish.status}"
+			forcedeliver="false"
+        />
+        <echo message="${ant.project.name} released with v${version}" />
+    </target>
+
+	<target name="publish-war" depends="clean,war" 
+		description="publish wars in the ivy repository">
+        <ivy:publish artifactspattern="${build.dir}/[artifact].[ext]" 
+        	resolver="${publish.resolver}"
+            pubrevision="${version}" 
+            status="${publish.status}"
+			forcedeliver="false"
+        />
+        <echo message="${ant.project.name} released with v${version}" />
+    </target>
+	
+	<target name="test" depends="clean-build,compile"
+		description="run all test projects">
+		
+	</target>
+
+    <target name="jar-dir" depends="version,compile">
+        <echo message="${jar.file}" />
+        <copy todir="${classes.dir}">
+            <fileset dir="${src.dir}">
+                <include name="**/*.properties"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="jar-exe" depends="jar-dir" if="main.class">
+        <manifestclasspath property="manifest.classpath" 
+            jarfile="${jar.file}">
+            <classpath refid="lib.path.id"/>
+        </manifestclasspath>
+        <jar destfile="${jar.file}">
+            <fileset dir="${classes.dir}" />
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Build-Version" value="${version}"/>
+                <attribute name="Main-Class" value="${main.class}"/>
+                <attribute name="Class-Path" value="${manifest.classpath}"/>
+            </manifest>
+       </jar>
+    </target>
+
+    <target name="jar-lib" depends="jar-dir" unless="main.class">
+        <jar destfile="${jar.file}">
+            <fileset dir="${classes.dir}" />
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Build-Version" value="${version}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="jar" depends="jar-exe,jar-lib"
+			description="make jar file for this project">
+    </target>
+
+	<target name="check-log4j">
+		<echo message="${classes.dir}/log4j.properties"/>
+		<available file="${classes.dir}/log4j.properties" 
+			property="log4j.exists"/>
+	</target>
+
+	<target name="config-log4j" depends="check-log4j" if="${log4j.exists}">
+		<echo message="${log4j.config}"/>
+		<loadfile property="log4j.properties" 
+			srcfile="${classes.dir}/log4j.properties">	
+			<filterchain>
+				<tokenfilter>
+					<replaceregex pattern="log4j.rootLogger=.*"
+						replace="${log4j.config}" flags="g"/>
+				</tokenfilter>
+			</filterchain>
+		</loadfile>
+		<echo message="${log4j.properties}" 
+			file="${classes.dir}/log4j.properties"/>
+	</target>
+
+	<target name="compile-war" depends="version,compile">
+		<mkdir dir="${web.lib.dir}" />
+		<copy todir="${web.lib.dir}">
+			<fileset dir="${lib.dir}" includes="**/*.jar" />
+		</copy>	
+		<copy todir="${classes.dir}">
+			<fileset dir="${src.dir}">
+				<include name="**/*.dic" />
+				<include name="**/*.list" />
+				<include name="**/*.xml" />
+				<include name="**/*.properties" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="check-webxml">
+		<echo message="${web.inf.dir}/web-${war.target}.xml"/>
+		<available property="webxml.target.exists" 
+			file="${web.inf.dir}/web-${war.target}.xml"/>
+	</target>
+
+	<target name="config-webxml" depends="check-webxml" 
+		if="${webxml.target.exists}">
+		<echo message="${webxml.target.exists}"/>
+		<echo message="${web.inf.dir}/web-${war.target}.xml"/>
+		<copy tofile="${web.xml}" overwrite="true" 
+			file="${web.inf.dir}/web-${war.target}.xml"/>
+	</target>
+	
+    <target name="war" depends="compile-war,config-log4j,config-webxml" 
+		description="make war file">
+		<echo message="${war.file}" />
+        <tstamp>
+            <format property="now" pattern="yyyy-MM-dd HH:mm:ss"/>
+        </tstamp>
+        <war destfile="${war.file}" webxml="${web.xml}">
+			<fileset dir="${web.dir}" 
+				excludes="META-INF/,WEB-INF/,WEB-INF/web-*.xml" />
+			<lib dir="${lib.dir}" excludes="servlet-api.jar"/>
+			<classes dir="${classes.dir}" />
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Build-Version" value="${version}" />
+				<attribute name="Build-Date" value="${now}" />
+            </manifest>
+        </war>
+    </target>
+
+    <target name="compile" depends="resolve-ivy" 
+		description="compile the project">
+        <mkdir dir="${classes.dir}" />
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" 
+			classpathref="lib.path.id" 
+			debug="${jc.debug}" 
+			optimize="${jc.optimize}"
+			encoding="${jc.encoding}"
+			source="${jc.source}"
+			target="${jc.target}"
+			deprecation="${jc.deprecation}"	
+			verbose="$(jc.verbose}"
+			includeAntRuntime="false"/>
+    </target>
+
+	<target name="check-revision">
+		<exec executable="git" outputproperty="git.revision" 
+			failifexecutionfails="false">
+			<arg value="describe"/>
+			<arg value="--tags"/>
+			<arg value="--always"/>
+			<arg value="HEAD"/>
+		</exec>
+		<condition property="git.rev" value="${git.revision}" else="fedcba90">
+			<and>
+				<available file="${root.dir}/.git" type="dir"/>
+				<isset property="git.revision"/>
+				<length string="${git.revision}" when="greater" 
+						trim="yes" length="0"/>
+			</and>
+		</condition>
+		<condition property="dbg.rev" value="d" else="r">
+			<istrue value="${jc.debug}"/>
+		</condition>	
+		<condition property="log4j.config" 
+			value="log4j.rootLogger=DEBUG,C,R"
+			else="log4j.rootLogger=ERROR,R">
+			<istrue value="${jc.debug}"/>
+		</condition>
+        <condition property="publish.resolver" value="local" else="shared">
+            <istrue value="${jc.debug}"/>
+        </condition>
+        <condition property="publish.status" value="integration" else="release">
+            <istrue value="${jc.debug}"/>
+        </condition>
+	</target>
+
+		<target name="ivy-new-version" depends="install-ivy,check-revision" 
+		unless="ivy.new.revision">
+		<echo message="git/dbg revision: ${git.rev}/${dbg.rev}"/>
+
+        <!-- default module version prefix value -->
+        <property name="module.version.prefix" 
+			value="${module.version.target}-${git.rev}-${dbg.rev}" />
+
+        <!-- asks to ivy an available version number -->
+        <ivy:info file="${ivy.file}" />
+        <ivy:buildnumber 
+            organisation="${ivy.organisation}" 
+			module="${ivy.module}" 
+            revision="${module.version.prefix}" 
+			defaultBuildNumber="1" 
+			revSep=""/>
+    </target>
+
+    <target name="version" depends="ivy-new-version"
+        description="create version file in classpath and mask it in jar">
+        <mkdir dir="${classes.dir}"/>
+        <echo message="version=${ivy.new.revision}" 
+					file="${classes.dir}/${ant.project.name}.properties" 
+					append="false" />
+
+        <!-- load generated version properties file -->
+        <property file="${classes.dir}/${ant.project.name}.properties" />
+    </target>
+
+    <target name="clean-lib" 
+		description="clean the project libraries">
+        <delete includeemptydirs="true" dir="${lib.dir}"/>
+    </target>
+
+	<target name="clean-build" 
+		description="clean the project built files">
+        <delete includeemptydirs="true" dir="${build.dir}"/>
+    </target>
+
+	<target name="clean-web" 
+		description="clean the web project libraries">
+		<delete includeemptydirs="true" dir="${web.lib.dir}" />
+	</target>
+
+	<target name="clean" depends="clean-build,clean-lib,clean-web" 
+		description="clean the project">
+	</target>
+
+</project>

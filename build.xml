@@ -1,0 +1,76 @@
+<!DOCTYPE project>
+<project name="jrd.git" default="build-jars"
+         xmlns:ivy="antlib:org.apache.ivy.ant">
+	<description>         
+		the base build file
+	</description>
+
+    <property name="root.dir" value="${basedir}" />
+	<property name="ivy.dir" value="${root.dir}/ivy" />
+
+	<target name="publish-native-lib">
+		<subant target="publish">
+			<fileset dir="${ivy.dir}" includes="build.xml" />
+		</subant>
+	</target>
+
+	<import file="${ivy.dir}/ivy-install.xml" />    
+
+  	<target name="jars" depends="install-ivy"> 
+	  	<ivy:buildlist reference="build-path">
+	  		<fileset dir="src/java" includes="**/build.xml" 
+				excludes="xws/build.xml,xws-site/build.xml" />
+	  	</ivy:buildlist>
+  	</target>
+
+  	<target name="wars" depends="install-ivy"> 
+	  	<ivy:buildlist reference="build-path">
+	  		<fileset dir="src/java" 
+				includes="xws/build.xml,xws-site/build.xml" />
+	  	</ivy:buildlist>
+  	</target>
+
+	<target name="tests" depends="install-ivy"> 
+	  	<ivy:buildlist reference="build-path">
+	  		<fileset dir="src/test" includes="**/build.xml" />
+	  	</ivy:buildlist>
+  	</target>
+
+	<target name="build-jars" depends="publish-native-lib,jars" 
+		description="compile, jar and publish all projects">
+		<subant target="publish-jar" buildpathref="build-path" />
+	</target>
+
+	<target name="build-wars" depends="build-jars,wars" 
+		description="compile, war and publish all projects">
+		<subant target="publish-war" buildpathref="build-path" />
+	</target>
+
+	<target name="build-tests" depends="tests" 
+		description="compile, test all projects">
+		<subant target="test" buildpathref="build-path" />
+	</target>
+
+	<target name="clean-jars" depends="jars" 
+		description="clean jars build files and libraries">
+		<subant target="clean" buildpathref="build-path" />	
+	</target>
+
+	<target name="clean-wars" depends="wars"
+		description="clean wars build files and libraries">
+		<subant target="clean" buildpathref="build-path" />
+	</target>
+
+	<target name="clean-tests" depends="tests"
+		description="clean test build files and libraries">
+		<subant target="clean" buildpathref="build-path" />
+	</target>
+
+	<target name="clean" depends="clean-jars,clean-wars,clean-tests" 
+		description="clean all projects">
+    	<subant target="clean" buildpathref="build-path" />
+        <delete dir="${basedir}/dist"/>
+  		<ivy:cleancache />
+	</target>
+ 
+</project>
