@@ -1,4 +1,4 @@
-package org.mars;
+package com.xws;
 import static java.lang.System.out;
 
 

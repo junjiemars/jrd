@@ -1,7 +1,7 @@
 <ivy-module version="1.0">
     <info 
         organisation="com.xws"
-        module="lang"
+        module="jrd"
         status="integration">
 		<ivyauthor name="junjiemars@gmail.com" />
 	</info>

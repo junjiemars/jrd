@@ -1,5 +1,5 @@
 <!DOCTYPE project>
-<project name="lang" default="run">
+<project name="jrd" default="run">
 
 	<property name="root.dir" value="${basedir}/../../.." />
 	<property name="ivy.dir" value="${root.dir}/ivy" />
@@ -11,7 +11,7 @@
 	<property name="build.dir" value="${basedir}/bin" />
 	<property name="classes.dir" value="${build.dir}/classes" />
 
-	<property name="main.class" value="com.xws.Main"/>
+	<property name="main.class" value="com.xws.JRD"/>
 
 	<path id="lib.path.id">
         <fileset dir="${lib.dir}" />
@@ -20,11 +20,7 @@
 	<import file="${ivy.dir}/ivy-install.xml"/>
 
 	<target name="run" depends="jar">
-		<java jar="${build.dir}/lang.jar" fork="true">
-			<!--
-			<jvmarg value="-Xdebug" />
-			<jvmarg value="-Xrunjdwp:transport=dt_socket,suspend=y,address=8000"/>
-			-->
+		<java jar="${build.dir}/jrd.jar" fork="true">
 		</java>
 	</target>
 
