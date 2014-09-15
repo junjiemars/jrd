@@ -7,5 +7,6 @@ public final class JRD {
     out.println("Redis Demo");
 
     Simple.run();
+    Packer.run();
   }
 }

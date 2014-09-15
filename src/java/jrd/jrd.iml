@@ -17,6 +17,7 @@
         <JAVADOC />
         <SOURCES>
           <root url="jar://$MODULE_DIR$/lib/jedis-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/msgpack-sources.jar!/" />
         </SOURCES>
         <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" />
       </library>

@@ -50,6 +50,7 @@ public final class Simple {
     for (Tuple i : R.zscan("Z0", "0").getResult()) {
       out.format("score=%s value=%s ", i.getScore(), i.getElement());
     }
+    out.println();
 
     R.close();
   }

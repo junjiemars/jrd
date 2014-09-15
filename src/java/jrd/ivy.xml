@@ -20,6 +20,12 @@
     <dependencies>
         <dependency org="redis.clients" name="jedis" rev="2.5.2"
           conf="build->default,sources"/>
+        <dependency org="com.google.code.gson" name="gson" rev="2.3"
+          conf="build->default"/>
+        <dependency org="log4j" name="log4j" rev="1.2.17"
+           conf="build->default"/>
+        <dependency org="org.msgpack" name="msgpack" rev="0.6.11"
+           conf="build->default,sources"/>
     </dependencies>
 
 </ivy-module>
