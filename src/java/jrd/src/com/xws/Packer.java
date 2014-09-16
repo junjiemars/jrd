@@ -9,19 +9,20 @@ import java.util.Date;
 import static java.lang.System.out;
 
 /**
- * Created by junjie on 9/15/2014.
+ * 测试: String(K/V)的序列化与反序列化
  */
 public final class Packer {
   public static final void run() {
+    // JSON序列化/反序列化
     jsonPacker();
+
+    // 2元序列化/反序列化
     binaryPacker();
   }
 
   public static final void jsonPacker() {
     Jedis R = new Jedis("192.168.4.11", 6379);
     R.connect();
-
-    // Json: serializer/deserializer
 
     // Json: string:
     final String s = "Hello,World";
@@ -44,8 +45,6 @@ public final class Packer {
   public static final void binaryPacker() {
     BinaryJedis R = new BinaryJedis("192.168.4.11", 6379);
     R.connect();
-
-    // Binary: serializer/deserializer
 
     // Binary: string
     final String s = "Hello,World";

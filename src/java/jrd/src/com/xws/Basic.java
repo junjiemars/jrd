@@ -8,9 +8,9 @@ import java.util.List;
 import static java.lang.System.out;
 
 /**
- * Created by junjie on 9/12/14.
+ * 基础Redis数据类型及操作
  */
-public final class Simple {
+public final class Basic {
   public static final void run() {
     Jedis R = new Jedis("192.168.4.11", 6379);
     R.connect();

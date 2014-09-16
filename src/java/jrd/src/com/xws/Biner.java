@@ -9,7 +9,7 @@ import org.msgpack.template.Templates;
 import java.io.IOException;
 
 /**
- * Created by junjie on 9/15/2014.
+ * 2元序列化/反序列化
  */
 public final class Biner {
 
@@ -39,15 +39,5 @@ public final class Biner {
   }
 
 
-//  public static final String from(final byte[] b) {
-//    final MessagePack p = new MessagePack();
-//    try {
-//      return p.read(b);
-//    } catch (IOException e) {
-//      _logger.error(e);
-//    }
-//    return null;
-//  }
-
-  private static final Logger _logger = Logger.getLogger(com.xws.Jsoner.class);
+  private static final Logger _logger = Logger.getLogger(Biner.class);
 }

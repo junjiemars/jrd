@@ -11,6 +11,9 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.TypeAdapter;
 
+/*
+ * JSON序列化/反序列化
+ */
 public final class Jsoner {
 
 	public static final <T> T from(final String json, final Class<T> type) {
