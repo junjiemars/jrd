@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fc017176-4c28-435d-b42e-3f2df8f00b6f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/java/jrd/src/com/xws/Connector.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/jrd/src/com/xws/Biner.java" afterPath="$PROJECT_DIR$/src/java/jrd/src/com/xws/Biner.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/jrd/src/com/xws/JRD.java" afterPath="$PROJECT_DIR$/src/java/jrd/src/com/xws/JRD.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/jrd/src/com/xws/Jsoner.java" afterPath="$PROJECT_DIR$/src/java/jrd/src/com/xws/Jsoner.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/jrd/src/com/xws/Packer.java" afterPath="$PROJECT_DIR$/src/java/jrd/src/com/xws/Packer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ivy/ivy-install.properties" afterPath="$PROJECT_DIR$/ivy/ivy-install.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ivy/ivy-install.xml" afterPath="$PROJECT_DIR$/ivy/ivy-install.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="E:\apps\jrd.git\src\java\jrd\src\com\xws\Simple.java" afterPath="$PROJECT_DIR$/src/java/jrd/src/com/xws/Basic.java" />
     </list>
     <ignored path="jrd.git.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -717,7 +709,11 @@
       <created>1410774500858</created>
       <updated>1410774500858</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add redis-client connection problems">
+      <created>1410846435423</created>
+      <updated>1410846435423</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -785,7 +781,8 @@
       <TodoPanelSettings />
     </option>
     <MESSAGE value="add json/binary serializer/deserializer" />
-    <option name="LAST_COMMIT_MESSAGE" value="add json/binary serializer/deserializer" />
+    <MESSAGE value="add redis-client connection problems" />
+    <option name="LAST_COMMIT_MESSAGE" value="add redis-client connection problems" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
