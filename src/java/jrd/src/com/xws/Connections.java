@@ -8,9 +8,9 @@ import redis.clients.jedis.exceptions.JedisConnectionException;
 import static java.lang.System.out;
 
 /**
- * 测试: Redis连接
+ * Redis连接
  */
-public final class Connector {
+public final class Connections {
   public static final void run()  throws Exception {
     timeout();
     pooling();

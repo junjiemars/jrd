@@ -14,7 +14,7 @@ import com.google.gson.TypeAdapter;
 /*
  * JSON序列化/反序列化
  */
-public final class Jsoner {
+public final class JsonSerializer {
 
 	public static final <T> T from(final String json, final Class<T> type) {
 
@@ -120,5 +120,5 @@ public final class Jsoner {
 		return (null);
 	}
 
-	private static final Logger _logger = Logger.getLogger(com.xws.Jsoner.class);
+	private static final Logger _logger = Logger.getLogger(JsonSerializer.class);
 }

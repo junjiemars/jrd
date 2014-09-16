@@ -2,16 +2,13 @@ package com.xws;
 
 import org.apache.log4j.Logger;
 import org.msgpack.MessagePack;
-import org.msgpack.template.Template;
-import org.msgpack.template.TemplateRegistry;
-import org.msgpack.template.Templates;
 
 import java.io.IOException;
 
 /**
  * 2元序列化/反序列化
  */
-public final class Biner {
+public final class BinarySerializer {
 
   public static final <T> byte[] to(final T t) {
     if (null == t)
@@ -39,5 +36,5 @@ public final class Biner {
   }
 
 
-  private static final Logger _logger = Logger.getLogger(Biner.class);
+  private static final Logger _logger = Logger.getLogger(BinarySerializer.class);
 }
