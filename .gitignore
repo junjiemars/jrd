@@ -24,3 +24,7 @@ src/java/jlr/src/org/mars
 
 # distribution
 dist
+
+# idea
+.idea/workspace.xml
+.idea/misc.xml
