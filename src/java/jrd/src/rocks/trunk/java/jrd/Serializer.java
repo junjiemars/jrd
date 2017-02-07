@@ -1,4 +1,4 @@
-package com.xws;
+package rocks.trunk.java.jrd;
 
 import org.msgpack.annotation.Message;
 import redis.clients.jedis.BinaryJedis;

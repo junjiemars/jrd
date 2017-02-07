@@ -1,4 +1,4 @@
-package com.xws;
+package rocks.trunk.java.jrd;
 
 /**
  * Created by junjie on 9/17/2014.

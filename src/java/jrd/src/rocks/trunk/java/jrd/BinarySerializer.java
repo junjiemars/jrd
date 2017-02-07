@@ -1,4 +1,4 @@
-package com.xws;
+package rocks.trunk.java.jrd;
 
 import org.apache.log4j.Logger;
 import org.msgpack.MessagePack;

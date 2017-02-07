@@ -1,4 +1,4 @@
-package com.xws;
+package rocks.trunk.java.jrd;
 
 import java.lang.reflect.Type;
 import java.util.Arrays;

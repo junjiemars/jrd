@@ -1,4 +1,4 @@
-package com.xws;
+package rocks.trunk.java.jrd;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Tuple;

@@ -1,8 +1,8 @@
-package com.xws;
+package rocks.trunk.java.jrd;
 import static java.lang.System.out;
 
 
-public class Main {
+public class Lang {
 	public static final void main(String[] args) {
 		double f0 = 1.0f;
 		if (1.0f == f0)

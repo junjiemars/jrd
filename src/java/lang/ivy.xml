@@ -3,7 +3,7 @@
         organisation="com.xws"
         module="lang"
         status="integration">
-		<ivyauthor name="junjiemars@gmail.com" />
+		<ivyauthor name="南山竹 https://github.com/junjiemars" />
 	</info>
 	<configurations>
 		<conf name="build" 

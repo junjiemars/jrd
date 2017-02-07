@@ -11,7 +11,7 @@
 	<property name="build.dir" value="${basedir}/bin" />
 	<property name="classes.dir" value="${build.dir}/classes" />
 
-	<property name="main.class" value="com.xws.JRD"/>
+	<property name="main.class" value="rocks.trunk.java.jrd.JRD"/>
 
 	<path id="lib.path.id">
         <fileset dir="${lib.dir}" />
