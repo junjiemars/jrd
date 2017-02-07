@@ -28,3 +28,5 @@ dist
 # idea
 .idea/workspace.xml
 .idea/misc.xml
+
+!ivy/native/ojdbc/ojdbc-14.jar
