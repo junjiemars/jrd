@@ -18,13 +18,13 @@ import static java.lang.System.out;
 public final class Sentinels {
 
   public static final void run() {
-    final String master = "m1";
+    final String master = "mymaster";
     final Set<String> sentinels = new HashSet<String>(){
-      { add("192.168.4.11:26379"); }
       //{ add(""); }
+      { add("192.168.40.34:26379"); }
     };
     final JedisPoolConfig conf = new JedisPoolConfig();
-    final JedisSentinelPool pool = new JedisSentinelPool("m1", sentinels, conf);
+    final JedisSentinelPool pool = new JedisSentinelPool(master, sentinels, conf);
 
     out.println(pool.getCurrentHostMaster());
     final Jedis R = pool.getResource();

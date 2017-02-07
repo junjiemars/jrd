@@ -11,6 +11,7 @@ public final class JRD {
     //Connector.run();
     //Pipelines.run();
     //Transactions.run();
-      Keyspaces.run();
+    //Keyspaces.run();
+    Sentinels.run();
   }
 }
